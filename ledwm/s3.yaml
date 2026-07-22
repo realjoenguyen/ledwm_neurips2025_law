@@ -1,0 +1,39 @@
+s3:
+  task: "messenger_s3"
+  replay:
+    prefill: auto
+  imag_horizon: 5
+  envs:
+    amount: 10
+  rssm:
+    cnn_atten:
+      depths: [32, 48, 128] # first is input
+      stages: 2
+      kernels: [2, 2]
+
+    task: "s3"
+    pos_dim: 32
+    entity_track_atten: True
+    atten: { query_dim: 64, key_dim: 64, value_dim: 32 }
+
+  run:
+    report: { first_bl: 129, first_bs: 24 }
+    keep_policy_state_on_device: False
+  reward_head: { bound: 1, bins: 20 }
+  critic: { bound: 1, bins: 20 }
+  env: { messenger: { length: 64, hist_len: 5, entity_track: True } }
+  entity_track: "atten"
+  encoder_sent:
+    entity_track: True
+
+s3_train:
+  _include:
+    - s3
+    - sent
+    - time
+    - large_encoder_s
+    - decay_multi_step
+
+small_s3:
+  reward_head: { bound: 1, bin: 20 }
+  critic: { bound: 2, bin: 40 }

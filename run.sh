@@ -1,0 +1,2 @@
+# run in dgx2-6
+./scripts/run_lwm.sh dgx 10 0,1 hard "sent large_encoder_s large_decoder_s small_image_data two_cnn multi_step no_image_input sum_reward prioritize no_decoder action_pred balanced_weight medium z_small entity_track_atten clip_grad_atten deter_game multi_head_atten no_free_rssm" "--rssm.deter 512 --batch_length 150 --replay.size 1e5  --run.train_ratio 64 --test_set test  --imag_horizon 32 --envs.amount 60"

@@ -1,0 +1,49 @@
+s2:
+  report_return_lambda: 0.99
+  replay:
+    tolerance_rate: 10 # more time to random policy
+    prefill: auto
+  task: "messenger_s2"
+  env: { messenger: { length: 32 } }
+  imag_horizon: 5
+  run:
+    report: { first_bl: 100, first_bs: 50 }
+    keep_policy_state_on_device: False
+  # rew_smooth_amt: 1
+  # rew_smooth_mode: "gaussian"
+  reward_head: { bound: 1, bins: 20 }
+  critic: { bound: 1, bins: 20 }
+  rssm:
+    task: s2
+    deter: 1024
+    classes: 16
+    atten: { query_dim: 64, key_dim: 64, value_dim: 32 }
+    cnn_atten:
+      depths: [32, 48, 128] # first is input
+      # dropout: 0.1
+  dim_x: 1760 # 6*6*48 + 32 (time_embed)
+
+s2_train:
+  _include:
+    - s2
+    - sent
+    - time
+    - large_encoder_s
+    - decay_multi_step
+  decoder_sent:
+    cnn_keys: ""
+
+s2_token:
+  batch_length: 512
+  run:
+    script: parallel
+  task: "messenger_s2"
+  # rew_smooth_amt: 0.5
+  env: { messenger: { length: 4 } }
+  reward_head: { bound: 1, bins: 20 }
+  critic: { bound: 1, bins: 20 }
+  rssm:
+    task: s2
+    deter: 2048
+    classes: 32
+  imag_horizon: 5

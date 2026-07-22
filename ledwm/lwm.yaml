@@ -1,0 +1,30 @@
+lwm:
+  duplicate_pos_eps: False
+  imag_horizon: 32
+  rssm:
+    deter: 1024
+    atten: { query_dim: 64, key_dim: 64, value_dim: 32 }
+  run: { report: { first_bl: 100, first_bs: 50 } }
+  reward_head: { bound: 1, bins: 200 }
+  critic: { bound: 1, bins: 200 }
+  env:
+    lwm:
+      length: 32
+      entity_track: True
+  loss_scales:
+    vector: 0
+  decoder_sent:
+    mlp_keys: ""
+
+lwm_train:
+  _include:
+    - lwm
+    - sent
+    - time
+    - large_encoder_s
+    - decay_multi_step
+
+lwm_small:
+  env:
+    lwm:
+      overfit_game: True

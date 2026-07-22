@@ -1,0 +1,276 @@
+{
+  "bird": {
+    "enemy": {
+      "chaser": ["the lethal adversary is being chased and held by the eagle."],
+      "fleeing": ["the eagle running away is a lethal adversary."],
+      "immovable": ["the stationary eagle is the lethal opponent."],
+      "unknown": []
+    },
+    "message": {
+      "chaser": [
+        "the entity following is a bird with a surreptitious document."
+      ],
+      "fleeing": [
+        "the given restricted document is being held by the eagle running from you."
+      ],
+      "immovable": ["the report is the classified bird who isn't moving."],
+      "unknown": ["the secret eagle is the message."]
+    },
+    "goal": {
+      "chaser": ["the critical goal is the bird creeping towards you."],
+      "fleeing": [
+        "the bird having the essential objective goes away from you."
+      ],
+      "immovable": ["the motionless, but vital, goal is the hawk."],
+      "unknown": ["the target is the essential hawk."]
+    }
+  },
+  "dog": {
+    "enemy": {
+      "chaser": ["the canine inching towards you is the deadly adversary."],
+      "fleeing": [
+        "the deadly enemy has a hound that is getting away from you."
+      ],
+      "immovable": [
+        "there is a place with a dog that doesn't move and has an adversary that is dangerous."
+      ],
+      "unknown": ["the enemy is a menacing canine."]
+    },
+    "message": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] },
+    "goal": {
+      "chaser": ["the hound is coming towards you and is the crucial goal."],
+      "fleeing": ["the hound that is running away is a vital target."],
+      "immovable": ["the stationary hound is the crucial target."],
+      "unknown": ["the essential goal is held by the canine."]
+    }
+  },
+  "fish": {
+    "enemy": {
+      "chaser": ["the fish is holding a deadly weapon and is chasing."],
+      "fleeing": ["the dangerous enemy is the shark that is leaving."],
+      "immovable": [
+        "the shark cannot be moved and possesses the enemy that's lethal."
+      ],
+      "unknown": ["the enemy is a deadly whale."]
+    },
+    "message": {
+      "chaser": ["the fish who has the secret document is chasing."],
+      "fleeing": [
+        "the message, which is restricted, is in the hands of the whale which is evading you."
+      ],
+      "immovable": ["the immobile fish holds the mysterious message."],
+      "unknown": ["the whale is the restricted message."]
+    },
+    "goal": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] }
+  },
+  "scientist": {
+    "enemy": {
+      "chaser": [
+        "the dangerous adversary is the scientist that is coming near you."
+      ],
+      "fleeing": ["the researcher is a deadly enemy who is running away."],
+      "immovable": ["a deadly opponent held by a scholar is stationary."],
+      "unknown": []
+    },
+    "message": {
+      "chaser": [
+        "the scientist that is moving towards you is the secret document."
+      ],
+      "fleeing": ["the researcher that is fleeing is the secret document."],
+      "immovable": ["the scholar that is stationary is a classified message."],
+      "unknown": ["the scientist has with him the restricted report."]
+    },
+    "goal": {
+      "chaser": ["the object who chases is a scholar that has a vital target."],
+      "fleeing": [
+        "the scholar with the significant goal is running away from you."
+      ],
+      "immovable": ["the researcher won't budge and it is a vital goal."],
+      "unknown": ["the scientist is transporting the critical quarry."]
+    }
+  },
+  "queen": {
+    "enemy": {
+      "chaser": ["the deadly opponent approaching you is the princess."],
+      "fleeing": [
+        "the empress holds a lethal adversary and runs away from you."
+      ],
+      "immovable": ["the princess that doesn't move is a dangerous enemy."],
+      "unknown": ["the captured lethal enemy is going with the princess."]
+    },
+    "message": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] },
+    "goal": {
+      "chaser": ["the approaching empress is a crucial obejective."],
+      "fleeing": [
+        "the crucial princess is the given objective that will flee from you."
+      ],
+      "immovable": [
+        "the queen is not moving, but it should be because it is so important."
+      ],
+      "unknown": ["the goal is being carried by the empress."]
+    }
+  },
+  "thief": {
+    "enemy": {
+      "chaser": [
+        "a chasing object happens to be a dangerous adversary that the robber carries."
+      ],
+      "fleeing": ["the robber with the lethal enemy is escaping from you."],
+      "immovable": ["the immovable thief contains the deadly opponent."],
+      "unknown": ["the enemy is the dangerous bandit."]
+    },
+    "message": {
+      "chaser": ["the robber is carrying a secret message and chasing."],
+      "fleeing": [
+        "the robber has the restricted report. the robber is running from you."
+      ],
+      "immovable": [
+        "the robber with the message that is restricted cannot be moved."
+      ],
+      "unknown": ["the clandestine bandit also serves as the certificate."]
+    },
+    "goal": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] }
+  },
+  "airplane": {
+    "enemy": {
+      "chaser": ["the jet is chasing with the enemy."],
+      "fleeing": [
+        "the plane is fleeing from you, while also holding the dangerous enemy."
+      ],
+      "immovable": ["the immovable airplane carries a deadly enemy."],
+      "unknown": []
+    },
+    "message": {
+      "chaser": [
+        "the airplane that is carrying a restricted message, is an object that chases you."
+      ],
+      "fleeing": ["the plane fleeing from you has the classified report."],
+      "immovable": [
+        "the jet holds a document that is secret and it is immovable."
+      ],
+      "unknown": ["you'll see the restricted plane as the message."]
+    },
+    "goal": {
+      "chaser": ["the essential target coming toward you is the jet."],
+      "fleeing": ["the fleeing plan is a critical target."],
+      "immovable": [
+        "the place in the plane is immovable and has a vital goal."
+      ],
+      "unknown": ["your view is that the important plane is the target."]
+    }
+  },
+  "robot": {
+    "enemy": {
+      "chaser": ["the lethal adversary headed towards you is the robot."],
+      "fleeing": ["the robot that is fleeing is a deadly opponent."],
+      "immovable": ["the immobile humanoid contains the lethal opponent."],
+      "unknown": ["the bot is a dangerous opponent."]
+    },
+    "message": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] },
+    "goal": {
+      "chaser": ["the humanoid and crucial objective are coming towards you."],
+      "fleeing": ["the robot that is getting away is an essential target."],
+      "immovable": ["the stagnant robot is the critical objective."],
+      "unknown": [
+        "the humanoid is the item which carries the crucial objective."
+      ]
+    }
+  },
+  "ship": {
+    "enemy": {
+      "chaser": ["the ferry which is approaching you is a deadly adversary."],
+      "fleeing": [
+        "the ship carries the deadly opponent.  it is fleeing from you."
+      ],
+      "immovable": [
+        "the item that cannot be moved with the deadly enemy is the boat."
+      ],
+      "unknown": ["your adversary is the deadly ferry."]
+    },
+    "message": {
+      "chaser": ["the ship is the classified report approaching you."],
+      "fleeing": [
+        "the restricted report, which is fleeing from you, is the ferry."
+      ],
+      "immovable": ["the stationary ferry is the secret message."],
+      "unknown": ["the ferry contains the secret message."]
+    },
+    "goal": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] }
+  },
+  "mage": {
+    "enemy": {
+      "chaser": [
+        "the wizard that is headed toward you is the destructive rival."
+      ],
+      "fleeing": [
+        "the sorcerer who is fleeing you carries the deadly opponent."
+      ],
+      "immovable": [
+        "the deadly enemy is contained in the wizard that cannot be moved."
+      ],
+      "unknown": []
+    },
+    "message": {
+      "chaser": ["approaching you is the sorcerer and the classified report."],
+      "fleeing": [
+        "the mage that is running away is a report.  the report is secret."
+      ],
+      "immovable": [
+        "the wizard is the immovable object which contains the classified message."
+      ],
+      "unknown": ["the secret report is a wizard."]
+    },
+    "goal": {
+      "chaser": [
+        "the wizard and the all-important goal are moving in your direction."
+      ],
+      "fleeing": ["the critical wizard fleeing from you is the objective."],
+      "immovable": ["the stationary mage is a vital objective."],
+      "unknown": ["the mage is vital and the goal."]
+    }
+  },
+  "sword": {
+    "enemy": {
+      "chaser": ["the deadly adversary coming towards you is the sword."],
+      "fleeing": [
+        "the saber is running away from you and has the dangerous opponent."
+      ],
+      "immovable": ["that sword that is stuck has a deadly opponent."],
+      "unknown": ["the enemy is a deadly sword."]
+    },
+    "message": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] },
+    "goal": {
+      "chaser": ["the chasing object holding a crucial goal is a blade."],
+      "fleeing": [
+        "the one with the sword who runs away from you is the crucial target."
+      ],
+      "immovable": ["the sword carrying the important goal is immovable."],
+      "unknown": ["the sword carries the critical goal."]
+    }
+  },
+  "ball": {
+    "enemy": {
+      "chaser": [
+        "the sphere that goes towards you is the adversary that is lethal."
+      ],
+      "fleeing": [
+        "the ball is holding the dangerous enemy and is fleeing from you."
+      ],
+      "immovable": [
+        "the thing that is unable to move  is the sphere that has the deadly enemy."
+      ],
+      "unknown": ["the lethal opponent is the sphere."]
+    },
+    "message": {
+      "chaser": ["the orb is a secret document approaching you."],
+      "fleeing": ["the orb currently running away is a classified document."],
+      "immovable": [
+        "the restricted paper and the orb standing still are one in the same."
+      ],
+      "unknown": [
+        "the classified report is going with the sphere and is being held."
+      ]
+    },
+    "goal": { "chaser": [], "fleeing": [], "immovable": [], "unknown": [] }
+  }
+}

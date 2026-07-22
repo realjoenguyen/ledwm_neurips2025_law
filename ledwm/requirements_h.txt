@@ -1,0 +1,10 @@
+cloudpickle
+colored
+gputil
+loguru>=0.7,<1
+msgpack
+numpy
+psutil
+ruamel.yaml
+tensorflow
+zmq

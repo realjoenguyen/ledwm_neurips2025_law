@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "ledwm"
+version = "0.1.0"
+description = "Code for 'Language-conditioned world model improves policy generalization by reading environmental descriptions.'"
+authors = ["Anh Nguyen", "Stefan Lee"]
+readme = "README.md"
+keywords = ["environment", "agent", "rl", "language"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "*"
+"ruamel.yaml" = "*"
+gym = { version = "0.26" }
+jax = { version = "0.4.*" }
+jaxlib = { version = "0.4.*" }
+optax = "*"
+optree = "*"
+tensorflow_probability = "*"
+tensorflow_cpu = "*"
+psutil = "*"
+rich = "*"
+loguru = ">=0.7,<1"
+matplotlib = "*"
+zmq = "*"
+datasets = "*"
+transformers = "*"
+torch = { version = "*", optional = true }
+wandb = { version = "*", optional = true }
+
+[tool.poetry.extras]
+# For pre-embedding new sentences
+dev = ["torch"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+reportGeneralTypeIssues = "none"
+reportUnknownParameterType = "none"
+reportUnknownArgumentType = "none"
+reportUnknownMemberType = "none"
+reportUnknownVariableType = "none"
+reportUnboundVariable = "none"
+reportMissingParameterType = "none"
+reportMissingTypeArgument = "none"
+reportOptionalMemberAccess = "none"
+reportOptionalSubscript = "none"
+reportPrivateImportUsage = "none"
+typeCheckingMode = "basic"

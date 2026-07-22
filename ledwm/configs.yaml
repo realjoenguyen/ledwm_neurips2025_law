@@ -1,0 +1,2745 @@
+defaults:
+  # load_multiple_ckpts: False
+  # clip_grad_atten: 0.0
+  # dyn_first_more: False
+  # pos_head_seperate: True
+  seperate_object_z: False
+  concat_role_movement: True
+  offline_one_config: False
+  train_offline_on: "train"
+  deter_limit: False
+  use_role: False
+  movement_role_lang_grid: False
+  slow_encoder_fraction: 0.0
+  slow_encoder: False
+  slow_encoder_update: 1
+  ema_encoder: False
+  overfit_batch_steps: 30000
+  time_in: 'obs'
+  dyn_rep_anneal: False
+  overfit_batch: False
+  rollout_image: False
+  loss_up_is_first_weight: 0.0
+  one_step_image: False
+  oracle_data_split: "all"  # ['all', 'train', 'test']
+  oracle_data_mode: 'hard'  # easy, medium, hard
+  dyn_rep_up_weight: 0.0
+  dyn_rep_up_nonzero: 0.0
+  skip_first_layer: False
+  residual_decoder: False
+  use_unimix_decay: False
+  kl_anneal: False
+  rep_anneal: False
+  slow_atten: False
+  residual_z: False
+  increase_rep: { enable: False }
+  predefined_concepts: False
+  num_concepts: 0
+  concept_dim: 0
+  posMLP: True
+  resume_replay: False
+  imag_improve_thres: 0.02
+  imag_improve_max: 1.3
+  z_argmax_imagine: False
+  z_argmax_train: False
+  report_return_lambda: 1.0
+  use_movement_class: False
+  measure_policy: greedy
+  actor_random_unimix: False
+  uncertainty_scale: 0
+  min_reward: -1
+  finetune_script: "run_finetune"
+  skip_from_wm: False
+  skip_win: False
+  lose_only: False
+  train_policy_is_first: False
+  train_policy_only: False
+  zero_pos: False
+  duplicate_pos_eps: False
+  decay_multi_step: False
+  num_eval_eps: 5
+  input_z_sc: False
+  dim_x: 1024
+  use_prev_stoch: False
+  test_set: "test"
+  deter_decoder: True
+  norm_adv: False
+  # sg_ac: False
+  sg_ac: True
+  batch_norm_rep: False
+  entity_track_and: False
+  entity_track: "none"
+  ignore_error: False
+  action_pred: True
+  value_pred: False
+  slow_value_target: False
+  drop_x_randomly_in_query: False
+  pos_only: False
+  num_eval_envs: 8
+
+  replay:
+    max_bw: 10
+    is_first: True
+    type: prioritize
+    prioritize_hyper:
+      eps: 0.001
+      alpha: 2
+      beta: 0.5
+      c: 1e5
+      branching: 16
+      initial: 300
+      exponent: 1
+    online: False
+    resume: False
+    prefill: "" # empty disables; "auto" loads newest compatible sibling run
+    size: 1e4 # replace replay_size
+    min_size: 0 # 0 means use batch_size before sampling
+    tolerance_rate: 5
+    remove_oversample: False
+    seperate_reward_stream: True
+    # upsample_pos: False
+    upsample_pos_rate: 0.5
+    # balanced_weight: False
+    imbalance: "balanced_weight"
+    balanced_weight_ac: False
+    imbalance_reward: "sum"
+    balanced_weight_priority: False
+    bw_scale: "sqrt"
+
+  has_image_input: True
+  encode_image: True
+  multi_step: False
+  dyn_rep_multi_step: False
+  # dyn_multi_step: False
+  # entity_aug: False
+
+  load_match_shape: False # load whatever matches shape
+  no_concat_image: [""]
+  real_step_log: True
+  # real_step_log: False
+  rew_smooth_amt: 0.0
+  rew_smooth_mode: "none"
+  rep_first: False
+  # is_first_replay: True
+  rep_first_min: 0
+  kl_weight: "none"
+  overfit: False
+  data: token
+  use_read: True
+  use_time: False
+  use_wandb: True
+  use_table: False
+  small_image: False
+  small_image_data: False
+  small_image_decoder: False
+  table_keys: [
+      # "image_loss",
+      # "image_gt",
+      # "image_gt_multihot",
+      # "image_pred",
+      # "image_diff",
+      # "image_openl",
+      # "entity_pos",
+      # "avatar_pos",
+      "atten",
+      # "atten1",
+      # "atten2",
+    ]
+  table_names: ["eval/report/", "train/"]
+  sync_tfboard: True
+  # encoder_size: xlarge
+  # decoder_size: xlarge
+  size: xlarge
+  vis:
+    recont: False
+
+  # Trainer
+  seed: 1000
+  method: name
+  task: dummy_disc
+  logdir: ""
+  logdir_base: "./logdir"
+  loaddirs: [""]
+  # load_wm_only: False
+  # load_policy_ckpt: False
+  load_only_key: ""
+  load_exclude_key: ""
+  # dataset_exclude_keys: ["info", "language_info"]
+  dataset_exclude_keys: ["info"]
+  eval_dir: ""
+  filter: (loss|fps|score|precision|recall|value)
+  text_dataset: ""
+
+  jax:
+    opt_step: False
+    cuda_data_dir: None
+    platform: gpu
+    jit: True
+    precision: bfloat16
+    prealloc: False
+    mem_fraction: 0.8
+    allocator: platform
+    xla_autotune_level: 4
+    quiet_xla: False
+    debug_nans: False
+    logical_cpus: 0
+    debug: False
+    policy_devices: [0]
+    train_devices: [0]
+    sync_every: 10
+    profiler: False
+    transfer_guard: False
+    # transfer_guard: True
+
+  run:
+    resume_replay_from: ""
+    finetune_train_ratio_after_load: 256
+    num_eps_each_policy: 10000
+    max_reconnect: 20
+    actor_timeout: 30
+    eps_finetune: 1000
+    use_table: False
+    debug: False
+    opt_step: False
+    report: { train: True, first_bs: 24, first_bl: 65 }
+    first_step: False
+    overfit_eps: False
+    skip_key: ""
+    resume_last: False
+    resume: ""
+    train_steps: 100
+    reset_logger: False
+    server: None
+    parallel_eval: false
+    mixed_precision: false
+    # env_step_timer: False
+    save_frames_to: ./frames/
+    script: parallel_train_eval_test
+    steps: 1e7
+    expl_until: 0
+    log_every: 300  # 5 minutes
+    learner_log_every: 60  # 1 minute; terminal progress only
+    log_video_every: 600
+    # log_timer: 0
+    log_env_step: { every: 0, chunk: True }
+    save_every: 900
+    eval_every: 1e4
+    eval_initial: True
+    eval_eps: 1000
+    eval_samples: 1
+    train_ratio: 64
+    train_fill: 0
+    eval_fill: 0
+    pretrain: 1
+    pretrain_wm_only: False
+    log_zeros: False
+    log_video: False
+    log_keys_video: [log_image]
+    log_keys_sum: "^$"
+    log_keys_mean: "(log_entropy)"
+    log_keys_max: "^$"
+    episode_log_every: 0
+    log_video_streams: 20
+    log_video_timeout: 60
+    from_checkpoint: ""
+    load_checkpoint: True
+    sync_every: 10
+    actor_host: "localhost"
+    actor_port: "5551"
+    actor_batch: 0 # 0 = auto (use envs.amount); set >0 to decouple from env count
+    actor_threads: 4
+    actor_timing: False
+    actor_timing_every: 30
+    env_timing: False
+    env_timing_every: 30
+    compact_action_rpc: True
+    keep_policy_state_on_device: True
+    async_replay_add: True
+    async_replay_add_queue: 4096
+    async_actor_postprocess: True
+    async_actor_postprocess_queue: 2
+    compile_only: False
+    # Training-graph diagnostics are useful for profiling but expensive at
+    # large batches. Individual task presets can enable the lean path.
+    fast_train_metrics: False
+    fast_optimizer_metrics: False
+    skip_adam_metrics: False
+    skip_train_outs: False
+    env_replica: -1
+    ipv6: False
+    trace_malloc: False
+
+  envs:
+    {
+      amount: 0,
+      parallel: process,
+      length: 0,
+      reset: True,
+      restart: True,
+      discretize: 0,
+    }
+  wrapper:
+    {
+      length: 0,
+      reset: True,
+      discretize: 0,
+      checks: False,
+      timeout_reward: 0.0,
+    }
+  env:
+    atari:
+      {
+        size: [64, 64],
+        repeat: 4,
+        sticky: True,
+        gray: True,
+        actions: all,
+        lives: unused,
+        noops: 0,
+        pooling: 2,
+        aggregate: max,
+        resize: pillow,
+      }
+    atari100k:
+      {
+        size: [64, 64],
+        repeat: 4,
+        sticky: False,
+        gray: False,
+        lives: unused,
+        noops: 30,
+        resize: pillow,
+      }
+    dmlab: { size: [64, 64], repeat: 4, episodic: True }
+    minecraft: { size: [64, 64], break_speed: 100.0, logs: False }
+    dmc: { size: [64, 64], repeat: 2, camera: -1 }
+    loconav: { size: [64, 64], repeat: 2, camera: -1 }
+    vln:
+      size: [64, 64]
+      mode: "train"
+      use_text: True
+      use_depth: True
+      dataset: train
+      use_expert: 0.
+      min_use_expert: 0.
+      anneal_expert_eps: 0
+      success_reward: 1000
+      early_stop_penalty: 0
+      use_descriptions: False
+      desc_length: 50
+
+    messenger:
+      size: [16, 16]
+      length: 1
+      vis: False
+      mode: "train"
+      use_sent_ids: True
+      model_sent: "mini"
+      debug_pos_gt: False
+      deter_game: False
+      mask_future_steps_dp: True # future steps = -1
+
+    lwm:
+      disappear: True
+      overfit_game: False
+      size: [16, 16]
+      length: 1
+      vis: False
+      mode: "train"
+      # load_embeddings: True
+      use_sent_ids: True
+      model_sent: "mini"
+      debug_pos_gt: False
+      # use_time_step: False
+      mask_future_steps_dp: True # future steps = -1
+
+    homegrid:
+      size: [64, 64]
+      # env config
+      max_steps: 100
+      num_trashobjs: 2
+      num_trashcans: 2
+      p_teleport: 0.05
+      p_unsafe: 0.
+    langroom:
+      length: 200
+      vocab_size: 15
+
+  # Agent
+  task_behavior: Greedy
+  expl_behavior: None
+  batch_size: 16
+  batch_length: 30
+  data_workers: 8 # num_workers
+
+  # World Model
+  grad_heads: [decoder, reward, cont, multi_reward, multi_cont, value]
+  rssm_type: rssm
+  atten_vec: False
+  rssm: {
+      gru_multi_layers: False,
+      pos_dim: 32,
+      seperate_cnn_image: False,
+      no_history_rollout: False,
+      lang_image_recon: False,
+      soft_z: { use: False },
+      impl: softmax,
+      deter: 4096,
+      units: 1024,
+      stoch: 32,
+      classes: 32,
+      act: silu,
+      norm: layer,
+      unimix: 0.01,
+      unroll: False,
+      action_clip: 1.0,
+      # bottleneck: -1,
+      winit: normal,
+      fan: avg,
+      maskgit: { embed: 256, layers: 4, heads: 4, ffwdim: 256, steps: 4 },
+      add_h_to_query: False, # include deter to query input for the atten
+      task: "none",
+      dropout: 0.0,
+      entity_track_atten: False,
+    }
+  # early_rssm:
+  #   {
+  #     deter: 4096,
+  #     units: 1024,
+  #     stoch: 32,
+  #     classes: 32,
+  #     act: silu,
+  #     norm: layer,
+  #     unimix: 0.01,
+  #     unroll: False,
+  #     action_clip: 1.0,
+  #     bottleneck: -1,
+  #     winit: normal,
+  #     fan: avg,
+  #     prior_layers: 3,
+  #   }
+  # token_rssm:
+  #   {
+  #     deter: 4096,
+  #     units: 1024,
+  #     stoch: 32,
+  #     classes: 32,
+  #     vocab: 32100,
+  #     act: silu,
+  #     norm: layer,
+  #     unimix: 0.01,
+  #     unroll: False,
+  #     action_clip: 1.0,
+  #     bottleneck: -1,
+  #     winit: normal,
+  #     fan: avg,
+  #     prior_layers: 3,
+  #   }
+  encoder_type: token
+  decoder_type: none
+  encoder: {
+      sent: false,
+      mlp_keys: "token_embed",
+      cnn_keys: ".*",
+      act: silu,
+      norm: layer,
+      mlp_layers: 5,
+      # mlp_units: 1024,
+      mlp_units: 512,
+      cnn: resnet,
+      depths: [17, 34, 64],
+      kernels: [3, 3],
+      stages: 2,
+      minres: 3,
+      # cnn_depth: 96,
+      blocks: 0,
+      resize: stride,
+      winit: normal,
+      fan: avg,
+    }
+
+  decoder: {
+      mlp_keys: "",
+      cnn_keys: ".*",
+      act: silu,
+      norm: layer,
+      mlp_layers: 5,
+      mlp_units: 1024,
+      cnn: resnet,
+      # cnn_depth: 96,
+      depths: [64, 32, 17],
+      stages: 2,
+      kernels: [3, 3],
+      minres: 3,
+      blocks: 0,
+      image_dist: binary,
+      vector_dist: symlog_mse,
+      inputs: [deter, stoch],
+      resize: stride,
+      winit: normal,
+      fan: avg,
+      outscale: 1.0,
+      cnn_sigmoid: False,
+    }
+
+  decoder_sent:
+    mlp_keys: ""
+
+  reward_head: {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: symlog_and_twohot,
+      outscale: 0.0,
+      outnorm: False,
+      inputs: [deter, stoch],
+      dims: deter,
+      winit: normal,
+      fan: avg,
+      bins: 255,
+      dropout: 0.0,
+      dropout_inputs: [deter]
+    }
+  cont_head: {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: binary,
+      outscale: 1.0,
+      outnorm: False,
+      inputs: [deter, stoch],
+      dims: deter,
+      winit: normal,
+      fan: avg,
+      dropout: 0.0,
+      dropout_inputs: [deter]
+    }
+  action_head: {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      minstd: 0.1,
+      maxstd: 1.0,
+      outscale: 1.0,
+      outnorm: False,
+      inputs: [prev_stoch, x],
+      dims: x, # output has dims = dims(x) = bs, bl, 512
+      winit: normal,
+      fan: avg,
+      symlog_inputs: False,
+      dropout: 0.0,
+      dist: onehot,
+    }
+  loss_scales: {
+      image: 0,
+      rollout_image: 0.0,
+      next_image: 0.0,
+      lang_image: 0.0,
+      rollout_lang_image: 0.0,
+      vector: 0, # reconstruct token symlog_mse
+      reward: 1.0,
+      rollout_reward: 1.0,
+      cont: 1.0,
+      rollout_cont: 1.0,
+      rollout_dyn: 0.0,
+      rollout_rep: 0.0,
+      dyn: 1.0,
+      rep: 0.1,
+      actor: 1.0,
+      action: 1.0,
+      critic: 1.0,
+      slowreg: 1.0,
+      token: 1.0,
+      lm: 0.0,
+      kl: 0,
+      num_pixels: 0.5,
+      prev_action: 1.0,
+      value: 1.0,
+    }
+  rssm_loss:
+    {
+      dyn_free: 1.0,
+      rep_free: 1.0,
+      rollout_dyn_free: 1.0,
+      rollout_rep_free: 1.0,
+      free_rep_only: False,
+    }
+  model_opt: {
+      frozen_keys: "enc_sent/sent_embed",
+      opt: adam,
+      lr: 3e-4, # 0.001
+      eps: 1e-8,
+      clip: 30,
+      wd: 0.0,
+      warmup: 0,
+      lateclip: 0.0,
+      clip_grad_atten: 0.0,
+      # frozen_keys: "^$",1000@06-25#11-50-22#73e
+    }
+  skip_cnn_training: False
+  skip_mlp_training: False
+  zero_data_keys: [""]
+  zero_cnn: False
+  zero_mlp: False
+
+  # Actor Critic
+  actor: {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      minstd: 0.1,
+      maxstd: 1.0,
+      outscale: 1.0,
+      outnorm: False,
+      unimix: 0.1,
+      # unimix_decay: {},
+      # unimix_decay: { init: 0.5, steps: 6e4, final: 0.2 },
+      inputs: [deter, stoch],
+      winit: normal,
+      fan: avg,
+      symlog_inputs: False,
+    }
+  critic:
+    {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: symexp_twohot,
+      outscale: 0.0,
+      outnorm: False,
+      inputs: [deter, stoch],
+      winit: normal,
+      fan: avg,
+      bins: 255,
+      symlog_inputs: False,
+    }
+  actor_opt:
+    {
+      opt: adam,
+      lr: 2e-4,
+      eps: 1e-5,
+      clip: 100.0,
+      wd: 0.0,
+      warmup: 0,
+      lateclip: 0.0,
+    }
+  critic_opt:
+    {
+      opt: adam,
+      lr: 1e-4,
+      eps: 1e-5,
+      clip: 100.0,
+      wd: 0.0,
+      warmup: 0,
+      lateclip: 0.0,
+    }
+  actor_dist_disc: onehot
+  actor_dist_cont: normal
+  actor_grad_disc: reinforce
+  actor_grad_cont: backprop
+  critic_type: vfunction
+  imag_horizon: 4
+  imag_unroll: False
+  # imag_cont: mean
+  imag_cont_hard: True
+  imag_cont: mode
+  horizon: 333
+  return_lambda: 0.95
+  critic_slowreg: logprob
+  slow_critic_update: 1
+  slow_critic_fraction: 0.02
+  slow_critic_target: False
+  retnorm: { impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0 }
+  actor_entropy: 3e-4 # entropy reg
+
+  # Exploration
+  expl_rewards: { extr: 1.0, disag: 0.1 }
+  expl_opt: { opt: adam, lr: 1e-4, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0 }
+  disag_head:
+    {
+      layers: 5,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: mse,
+      outscale: 1.0,
+      inputs: [deter, stoch, action],
+      winit: normal,
+      fan: avg,
+    }
+  disag_target: [stoch]
+  disag_models: 8
+
+  # Director
+  director_jointly: True
+  train_skill_duration: 8
+  env_skill_duration: 8
+  goal_enc:
+    {
+      layers: 5,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: onehot,
+      outscale: 1.0,
+      inputs: [goal],
+    }
+  goal_dec:
+    {
+      layers: 5,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: mse,
+      outscale: 0.1,
+      inputs: [skill],
+    }
+  goal_opt:
+    {
+      opt: adam,
+      lr: 1e-4,
+      eps: 1e-6,
+      clip: 100.0,
+      wd: 1e-2,
+      wd_pattern: "kernel",
+    }
+  goal_kl_scale: 1.0
+  goal_kl_free: 1.0
+  skill_shape: [8, 8]
+  manager_rews: { extr: 1.0, expl: 0.1, goal: 0.0 }
+  worker_rews: { extr: 0.0, expl: 0.0, goal: 1.0 }
+  worker_inputs: [deter, stoch, goal]
+  worker_goals: [manager]
+  worker_report_horizon: 64
+
+# minecraft:
+#   task: minecraft_diamond
+#   envs.amount: 16
+#   run:
+#     script: train_save
+#     eval_fill: 1e5
+#     train_ratio: 16
+#     log_keys_max: "^log_inventory.*"
+#   encoder:
+#     {
+#       mlp_keys: "inventory|inventory_max|equipped|health|hunger|breath|reward",
+#       cnn_keys: "image",
+#     }
+#   decoder:
+#     {
+#       mlp_keys: "inventory|inventory_max|equipped|health|hunger|breath",
+#       cnn_keys: "image",
+#     }
+
+# dmlab:
+#   task: dmlab_explore_goal_locations_small
+#   envs.amount: 8
+#   encoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   decoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   run.train_ratio: 64
+
+# atari:
+#   task: atari_pong
+#   envs.amount: 8
+#   run:
+#     steps: 5.5e7
+#     eval_eps: 10
+#     train_ratio: 64
+#   encoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   decoder: { mlp_keys: "$^", cnn_keys: "image" }
+
+# atari100k:
+#   task: atari_pong
+#   envs: { amount: 1 }
+#   run:
+#     script: train_eval
+#     steps: 1.5e5
+#     eval_every: 1e5
+#     eval_initial: False
+#     eval_eps: 100
+#     train_ratio: 1024
+#   jax.precision: float32
+#   rssm.deter: 512
+#   .*\.cnn_depth: 32
+#   .*\.layers: 2
+#   .*\.units$: 512
+#   actor_eval_sample: True
+#   encoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   decoder: { mlp_keys: "$^", cnn_keys: "image" }
+
+# crafter:
+#   task: crafter_reward
+#   envs.amount: 1
+#   run:
+#     log_keys_max: "^log_achievement_.*"
+#     log_keys_sum: "^log_reward$"
+#   run.train_ratio: 512
+#   encoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   decoder: { mlp_keys: "$^", cnn_keys: "image" }
+
+# dmc_vision:
+#   task: dmc_walker_walk
+#   run.train_ratio: 512
+#   rssm.deter: 512
+#   .*\.cnn_depth: 32
+#   .*\.layers: 2
+#   .*\.units: 512
+#   encoder: { mlp_keys: "$^", cnn_keys: "image" }
+#   decoder: { mlp_keys: "$^", cnn_keys: "image" }
+
+# dmc_proprio:
+#   task: dmc_walker_walk
+#   run.train_ratio: 512
+#   rssm.deter: 512
+#   .*\.cnn_depth: 32
+#   .*\.layers: 2
+#   .*\.units: 512
+#   encoder: { mlp_keys: ".*", cnn_keys: "$^" }
+#   decoder: { mlp_keys: ".*", cnn_keys: "$^" }
+
+# bsuite:
+#   task: bsuite_mnist/0
+#   envs: { amount: 1, parallel: none }
+#   run:
+#     script: train
+#     train_ratio: 1024 # 128 for cartpole
+#   rssm.deter: 512
+#   .*\.cnn_depth: 32
+#   .*\.layers: 2
+#   .*\.units: 512
+
+# loconav:
+#   task: loconav_ant_maze_m
+#   env.loconav.repeat: 2
+#   run:
+#     train_ratio: 512
+#     log_keys_max: "^log_.*"
+#   encoder: { mlp_keys: ".*", cnn_keys: "image" }
+#   decoder: { mlp_keys: ".*", cnn_keys: "image" }
+
+# vln:
+#   task: vln_default
+#   run:
+#     train_fill: 1024
+#     log_keys_max: "^log_.*success"
+#     log_keys_mean: "^log_.*success"
+#     log_keys_video: [image, log_image]
+#     log_zeros: True
+#   encoder: { mlp_keys: "token_embed$", cnn_keys: ".*" }
+#   decoder: { mlp_keys: "token_embed$", cnn_keys: ".*" }
+
+langroom:
+  task: langroom_answer-only
+  envs.amount: 4
+  run.train_ratio: 16
+  run.log_keys_video: [image, log_image]
+  encoder: { mlp_keys: "text", cnn_keys: "image" }
+  decoder: { mlp_keys: "text", cnn_keys: "image" }
+
+# small:
+#   size: small
+#   rssm.deter: 512
+#   .*\.cnn_depth: 32
+#   .*\.units: 512
+#   .*\.layers: 2
+
+medium:
+  size: medium
+  # rssm.deter: 1024
+  # .*\.cnn_depth: 48
+  .*\.units: 512
+  .*\.layers: 3
+
+small:
+  size: small
+  # rssm.deter: 2048
+  # .*\.cnn_depth: 64
+  # .*\.depth: 64 # rssm
+  .*\.units: 256
+  .*\.layers: 2
+
+xlarge:
+  size: xlarge
+  rssm.deter: 4096
+  .*\.cnn_depth: 96
+  .*\.units: 1024
+  .*\.layers: 5
+
+# multicpu:
+#   jax:
+#     platform: cpu
+#     logical_cpus: 8
+#     policy_devices: [0, 1]
+#     train_devices: [2, 3, 4, 5, 6, 7]
+#   run:
+#     actor_batch: 4
+#   envs:
+#     amount: 8
+#   batch_size: 12
+#   batch_length: 10
+
+earlyrssm:
+  rssm_type: early
+  decoder.inputs: [deter]
+  reward_head.inputs: [deter]
+  cont_head.inputs: [deter]
+  actor.inputs: [deter]
+  critic.inputs: [deter]
+
+debug:
+  use_wandb: False
+  jax:
+    jit: True
+    prealloc: False
+    debug: True
+    platform: gpu
+    profiler: False
+    mem_fraction: 0.7
+  envs:
+    restart: False
+    amount: 2
+    # parallel: none
+    parallel: process
+
+  data_workers: 1
+  wrapper: { length: 100, checks: True }
+  run:
+    debug: True
+    report: { train: True }
+    reset_logger: True
+    eval_every: 10
+    log_every: 1
+    save_every: 10
+    actor_batch: 2
+    load_checkpoint: False
+    script: train
+    train_steps: 10
+    train_ratio: 10
+  batch_size: 2
+  batch_length: 10
+  encoder.cnn_depth: 8
+  decoder.cnn_depth: 8
+  rssm: { deter: 32, units: 16, stoch: 4, classes: 4 }
+  .*unroll: False
+  .*\.layers: 2
+  .*\.units: 16
+  .*\.wd$: 0.0
+  env:
+    messenger:
+      vis: False
+  replay: { size: 24 }
+
+debug_parallel:
+  num_eval_envs: 2
+  replay: { resume: False, size: 48 }
+  use_wandb: False
+  jax:
+    prealloc: False
+    debug: True
+  envs:
+    amount: 2
+  data_workers: 1
+  wrapper: { length: 0, checks: True }
+  run:
+    max_reconnect: 50
+    debug: True
+    reset_logger: True
+    eval_every: 1000
+    log_every: 10
+    save_every: 10
+    actor_batch: 2
+    load_checkpoint: False
+    script: parallel_train_eval_test
+    train_steps: 10
+    train_ratio: 10
+
+  batch_size: 2
+  batch_length: 10
+  # encoder.cnn_depth: 8
+  # decoder.cnn_depth: 8
+  # rssm: { deter: 32, units: 16, stoch: 4, classes: 4 }
+  .*unroll: False
+  # .*\.layers: 2
+  # .*\.units: 16
+  # .*\.wd$: 0.0
+  env:
+    messenger:
+      vis: False
+
+find_bs:
+  # replay.resume: False
+  use_wandb: False
+  jax:
+    prealloc: False
+  envs:
+    amount: 10
+  data_workers: 4
+  run:
+    reset_logger: True
+    eval_every: 10
+    log_every: 5
+    save_every: 10
+    train_ratio: 64
+    # load_checkpoint: False
+    script: parallel
+    train_steps: 5
+  batch_size: 5
+  batch_length: 512
+
+sent:
+  use_read: False
+  run: { report: { train: True } }
+  filter: (fps|wait|decay|loss|opt_step|score|win_rate|adv_mean|logprob|weight|grad_norm|acc)
+  data: sent
+  encoder_type: sent
+  decoder_type: sent
+  encoder_size: large
+  decoder_size: large
+  # env:
+  #   messenger:
+  #     t5_sent: True
+
+  encoder_sent:
+    # use_time_step: False
+    use_sent_ids: True
+    embed_dim: 32
+    act: silu
+    norm: layer
+    winit: normal
+    fan: avg
+    # dropout: 0.1
+
+  decoder_sent: {
+      mlp_keys: "mean_sent_embed",
+      cnn_keys: "image",
+      act: silu,
+      norm: layer,
+      mlp_layers: 5,
+      mlp_units: 1024,
+      cnn: resnet,
+      depth: 96,
+      blocks: 0,
+      # image_dist: mse,
+      image_dist: binary,
+      vector_dist: symlog_mse,
+      inputs: [stoch, deter],
+      resize: stride,
+      winit: normal,
+      fan: avg,
+      outscale: 1.0,
+      minres: 4,
+      cnn_sigmoid: False,
+      sent_dim: 384,
+      # dropout: 0.1,
+    }
+
+  rssm: # use h_t as history for all entities
+    concat_image: False
+    concat_deter: True # given exp results from no_rssm_deter
+    use_atten: True
+    atten: { heads: 1, query_dim: 64, key_dim: 64, value_dim: 64, gt_grounding: False, pos_head_seperate: False } # size * heads
+    cnn_atten:
+      cnn_depth: 96
+      stages: 1
+      depths: [32, 64, 128]
+      minres: 3
+      kernel: 2
+      kernels: [2]
+      blocks: 0
+      resize: stride
+      normalize: False
+    mlp: { layers: 1, units: 1024, act: silu, norm: layer }
+
+xsmall_encoder:
+  encoder_size: xsmall
+  rssm:
+    cnn: { kernel: 1, stride: 1, minres: 4 }
+
+medium_encoder_token:
+  encoder_size: medium
+  encoder: { kernels: [3, 3], stride: 2, minres: 2, image_shape: [10, 10] }
+
+large_encoder_s:
+  encoder_size: large_s
+  rssm:
+    image_shape: [10, 10]
+    cnn_atten:
+      kernels: [2, 3]
+      strides: [1, 2]
+      minres: 3
+      stages: 2
+      depths: [32, 64, 128]
+    atten: { value_dim: 64 }
+
+large_encoder_token:
+  encoder_size: large
+  encoder: { kernels: [4, 3], stride: 2, minres: 2, image_shape: [10, 10] }
+
+small_decoder_token:
+  decoder_size: small
+  decoder_sent:
+    {
+      kernels: [3, 3],
+      strides: [2, 2],
+      stages: 2,
+      minres: 3,
+      depths: [68, 34, 17],
+    }
+  env:
+    messenger:
+      size: [12, 12]
+
+small_decoder_sent:
+  decoder_size: small
+  decoder_sent:
+    {
+      kernels: [3, 3],
+      strides: [2, 2],
+      stages: 2,
+      minres: 3,
+      depths: [68, 34, 17],
+    }
+  env:
+    messenger:
+      size: [12, 12]
+
+large_decoder_4:
+  decoder_size: large_4
+  decoder_sent:
+    kernels: [3, 3]
+    strides: [1, 2]
+    minres: 5
+    stages: 2
+  env:
+    messenger:
+      size: [10, 10]
+
+medium_decoder:
+  decoder_size: medium
+  decoder_sent: { kernels: [4, 4], stride: 2, minres: 3, depths: [64, 32, 17] }
+  env:
+    messenger:
+      size: [12, 12]
+
+medium_decoder_10:
+  decoder_size: medium
+  decoder_sent: { kernels: [4, 4], strides: [1, 2], minres: 5, stages: 2 }
+  env:
+    messenger:
+      size: [10, 10]
+
+medium_decoder_token_10:
+  decoder_size: medium
+  decoder: { kernels: [3, 3], strides: [1, 2], minres: 5, stages: 2 }
+  env:
+    messenger:
+      size: [10, 10]
+
+large_decoder:
+  decoder_size: large
+  decoder_sent: { kernel: 4, stride: 2, minres: 3 }
+  env:
+    messenger:
+      size: [12, 12]
+
+large_decoder_new:
+  decoder_size: large_new
+  decoder_sent: {
+      kernels: [3, 3],
+      strides: [1, 2],
+      minres: 5,
+      stages: 2,
+      # depths: [64, 32, 17],
+    }
+  env:
+    messenger:
+      size: [10, 10]
+
+large_decoder_s:
+  decoder_size: large_s
+  decoder_sent:
+    {
+      kernels: [2, 3],
+      strides: [2, 2],
+      minres: 3,
+      stages: 2,
+      depths: [64, 32, 17],
+    }
+  env: { messenger: { size: [12, 12] } }
+
+# small_depths:
+#   rssm:
+#     cnn: { depths: [40, 64, 128] }
+#   decoder_sent:
+#     depths: [64, 32, 17]
+
+large_decoder_10:
+  decoder_size: large
+  decoder_sent:
+    kernels: [4, 4]
+    strides: [1, 2]
+    minres: 5
+    stages: 2
+  env:
+    messenger:
+      size: [10, 10]
+
+large_decoder_token:
+  decoder_size: large
+  decoder:
+    kernels: [3, 4]
+    stride: 2
+    minres: 3
+  env:
+    messenger:
+      size: [12, 12]
+
+large_decoder_token_10:
+  decoder_size: large
+  decoder:
+    kernels: [4, 4]
+    strides: [1, 2]
+    minres: 5
+    stages: 2
+  env:
+    messenger:
+      size: [10, 10]
+
+medium_decoder_token:
+  decoder_size: medium
+  decoder: { kernel: 3, stride: 2, minres: 3 }
+  env:
+    messenger:
+      size: [12, 12]
+
+many_heads:
+  rssm:
+    atten: { heads: 2, size: 128 } # size * heads
+
+small_atten:
+  small_attention: True
+  rssm:
+    atten: { value_dim: 32, query_dim: 512, key_dim: 512 }
+
+overfit:
+  overfit: True
+  env:
+    messenger:
+      small: True
+  run:
+    step: 1e5
+    log_every: 30
+  # rssm:
+  # use_atten: False
+
+overfit_eps:
+  # use_wandb: False
+  real_step_log: False
+  run:
+    overfit_eps: True
+    script: train
+    log_every: 15
+    train_steps: 10
+    reset_logger: True
+    eval_every: 1000
+    save_every: 10
+    load_checkpoint: False
+    pretrain: 15000
+    train_fill: 1
+
+  task_behavior: Random
+  batch_size: 1
+  batch_length: 5
+
+  jax:
+    prealloc: True
+    debug: False
+    platform: gpu
+    profiler: False
+    mem_fraction: 0.8
+
+  envs:
+    restart: False
+    amount: 1
+    parallel: none
+
+  data_workers: 4
+  wrapper: { length: 100, checks: True }
+  filter: (mean|reward|fps|replay|chart|opt_loss|extr|grad_norm|opt_step|score|adv_mean|logprob|grad_norm|acc)
+
+overfit_eps_token:
+  batch_length: 45
+
+run_offline:
+  run:
+    script: offline
+    pretrain_wm_only: True
+
+min_debug:
+  #  jax: {jit: true, debug: True}
+  #  env: {parallel: none, amount: 1}
+  #  data_workers: 1
+  batch_size: 8
+  batch_length: 12
+  encoder.cnn_depth: 16
+  decoder.cnn_depth: 16
+  rssm: { units: 64, stoch: 8, classes: 8 }
+  .*unroll: False
+  .*\.layers: 2
+  .*\.units: 64
+
+profiler:
+  run:
+    script: profiler
+  envs:
+    amount: 1
+    parallel: none
+
+# sent_cache:
+#   env:
+#     messenger:
+#       use_sent_ids: True
+#   encoder_sent:
+#     use_sent_ids: True
+#   model_opt:
+#     frozen_keys: "enc_sent/sent_embed"
+
+reward_mse:
+  reward_head:
+    dist: symlog_mse
+
+# reward_grain:
+#   reward_head:
+#     bound: 1.0
+#     bins: 20
+
+# critic_grain:
+#   critic:
+#     bound: 1.0
+#     bins: 20
+
+use_wandb_direct:
+  use_wandb: True
+  sync_tfboard: False
+
+shortcut:
+  encoder:
+    shortcut: True
+  decoder:
+    shortcut: True
+
+no_lang:
+  rssm:
+    use_atten: False
+  env:
+    messenger:
+      use_lang: False
+      use_sent_ids: False
+  encoder_sent:
+    mlp_keys: ""
+    use_sent_ids: False
+    use_lang: False
+  decoder_sent:
+    mlp_keys: ""
+  loss_scales:
+    vector: 0
+
+image_loss_only:
+  loss_scales: {
+      image: 1.0,
+      vector: 0, # reconstruct token symlog_mse
+      reward: 0,
+      cont: 0,
+      dyn: 1,
+      rep: 0.1,
+      actor: 0,
+      critic: 0,
+      slowreg: 0,
+      token: 0,
+      lm: 0,
+    }
+
+small_deter:
+  rssm:
+    deter: 2048
+
+xsmall_deter:
+  rssm:
+    deter: 1024
+
+read:
+  use_read: True
+  env:
+    messenger:
+      read: True
+      read_steps: 1
+  encoder_sent:
+    mlp: { layers: 5, units: 32, act: silu, norm: layer }
+    read: True
+  rssm:
+    read: True
+
+long_read:
+  use_read: True
+  env:
+    messenger:
+      read: True
+      read_steps: 38
+  encoder_sent:
+    mlp: { layers: 5, units: 1024, act: silu, norm: layer }
+    read: True
+  rssm:
+    read: True
+
+bigger_stoch:
+  rssm:
+    stoch: 32
+    classes: 64
+
+vis_policy:
+  run:
+    log_video: True
+    log_every: 120
+  env:
+    messenger:
+      vis: True
+  envs:
+    amount: 5
+
+z_small:
+  z_size: "small"
+  rssm:
+    stoch: 16
+    classes: 8
+
+z_medium:
+  z_size: "medium"
+  rssm:
+    stoch: 16
+    classes: 16
+
+z_large:
+  z_size: "large"
+  rssm:
+    stoch: 48
+    classes: 16
+
+z_super:
+  z_size: "super"
+  rssm:
+    stoch: 100
+    classes: 16
+
+z_super_2:
+  z_size: "super"
+  rssm:
+    stoch: 120
+    classes: 5
+
+
+big_stoch:
+  rssm:
+    stoch: 64
+    classes: 32
+
+xbig_stoch:
+  rssm:
+    stoch: 512
+    classes: 8
+
+small_encoder_mlp:
+  encoder_sent:
+    mlp: { layers: 2, units: 32, act: silu, norm: layer }
+
+time:
+  use_time: True
+  env:
+    messenger:
+      use_time_step: True
+    lwm:
+      use_time_step: True
+  encoder_sent:
+    use_time_step: True
+  dim_time: 32
+
+# rssm_mlp:
+#   rssm:
+#     mlp: { layers: 1, units: 1024, act: silu, norm: layer }
+
+dense_image:
+  small_image: True
+  env:
+    messenger:
+      small_image: True
+  encoder_sent:
+    small_image: True
+
+small_image_data:
+  small_image_data: True
+  env:
+    messenger:
+      remove_image: True
+      size: [12, 12]
+
+dense_image_token:
+  small_image: True
+  env:
+    messenger:
+      small_image: True
+  encoder:
+    cnn_keys: "small_image"
+    small_image: True
+  decoder:
+    cnn_keys: "image"
+
+mse_image:
+  small_image_decoder: True
+  decoder:
+    image_dist: mse
+    cnn_keys: "small_image"
+  env:
+    messenger:
+      small_image_decoder: True
+
+no_lang_token:
+  env: { messenger: { lang: False } }
+
+float32:
+  jax:
+    precision: float32
+
+random_policy:
+  task_behavior: Random
+  pretrain_wm_only: True
+
+mask_read_image:
+  mask_read_image: True
+
+gaussian:
+  rssm:
+    mlp: { layers: 5, units: 512, act: silu, norm: layer }
+    impl: gaussian
+
+table:
+  use_table: True
+  run:
+    use_table: True
+  vis:
+    recont: True
+
+
+fast_model:
+  model_opt:
+    lr: 1e-3
+
+ffast_model:
+  model_opt:
+    lr: 4e-3
+
+xfast_model:
+  model_opt:
+    lr: 4e-4
+
+no_read_token:
+  use_read: False
+  env:
+    messenger:
+      use_reading: False
+  encoder:
+    mlp_keys: ""
+  decoder:
+    mlp_keys: ""
+  loss_scales: {
+      image: 1.0,
+      vector: 0, # reconstruct token symlog_mse
+      reward: 0,
+      cont: 0,
+      dyn: 1,
+      rep: 0.1,
+      actor: 0,
+      critic: 0,
+      slowreg: 0,
+      token: 0,
+      lm: 0,
+    }
+
+no_read:
+  use_read: False
+  rssm:
+    use_atten: False
+    image_depths: [17, 34, 68]
+  env:
+    messenger:
+      use_lang: False
+      use_sent_ids: False
+  encoder_sent:
+    mlp_keys: ""
+    use_sent_ids: False
+    use_lang: False
+  decoder_sent:
+    mlp_keys: ""
+  loss_scales:
+    vector: 0
+
+no_norm_decoder:
+  decoder:
+    norm: none
+
+clip:
+  model_opt:
+    clip: 10
+
+# big_train_ratio:
+#   run:
+#     train_ratio: 512
+#   envs:
+#     amount: 2
+
+# medium_train_ratio:
+#   run:
+#     train_ratio: 256
+#   envs:
+#     amount: 15
+
+# small_cnn:
+# .*\.cnn_depth: 48
+
+lion:
+  model_opt:
+    opt: lion
+
+enforce_num_pixels:
+  decoder_sent:
+    enforce_num_pixels: True
+  env:
+    messenger:
+      enforce_num_pixels: True
+
+# no_lang_loss:
+#   loss_scales:
+#     vector: 0
+#   decoder_sent:
+#     mlp_keys: ""
+#   decoder: # for ledwm - token
+#     mlp_keys: ""
+
+first_step:
+  run: { first_step: True }
+  wrapper: { length: 0 }
+
+weighted:
+  decoder_sent:
+    weighted_loss: True
+
+focal:
+  decoder_sent:
+    focal: True
+
+kl_increase:
+  kl_weight: "increase"
+
+soft_z:
+  rssm:
+    soft_z:
+      { use: True, final: 0.5, init: 1, interval: 500, annel_rate: 0.0003 }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+
+reverb:
+  replay: { type: reverb }
+  run: { script: train }
+
+test:
+  load_match_shape: True # except sent
+  env:
+    messenger: { vis: True, mode: "test" }
+    lwm: { mode: "test" }
+  run:
+    script: parallel_eval
+    eval_eps: 5000
+    log_every: 10
+  envs: { amount: 40 }
+  jax: { transfer_guard: False }
+  report: { train: True, first_bs: 1, first_bl: 40 }
+  actor: { unimix: 0 }
+
+# reward_no_image:
+#   no_concat_image: ["reward"]
+
+# cont_reward_no_image:
+#   no_concat_image: ["reward", "cont"]
+
+# curious:
+#   run:
+#     script: train
+#   replay: { type: curious }
+#   envs: { amount: 1 }
+#   replay_hyper:
+#     {
+#       initial: 1e7,
+#       c: 1e4,
+#       beta: 0.5,
+#       epsilon: 0.01,
+#       alpha: 2,
+#       key_find_priority: 1e7,
+#     }
+
+unimix_actor:
+  use_unimix_decay: True
+  actor:
+    unimix_decay: { init: 0.3, steps: 6e4, final: 0.2 }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+
+train_eval:
+  real_step_log: False
+  run:
+    script: train_eval
+    steps: 1e7
+    eval_every: 1e4
+    eval_initial: False
+    eval_eps: 1000
+    train_ratio: 256
+
+# parallel_train_eval:
+#   run:
+#     script: parallel_train_eval
+# report: { train: True, first_bs: 24, first_bl: 65 }
+
+# no_rssm_deter:
+# rssm: { concat_deter: False } # use deter to input to z
+
+# no_deter_decoder:
+#   deter_decoder: False
+#   rssm: { concat_deter: False }
+#   # decoder_sent: { inputs: [deter, stoch] }
+#   reward_head: { inputs: [stoch] }
+#   cont_head: { inputs: [stoch] }
+
+two_cnn:
+  two_cnn: True
+  dim_x: 1024
+  rssm:
+    cnn_atten:
+      # preconv: True
+      depths: [32, 64, 128, 256] # first is input
+      kernel: 2
+      minres: 2
+      stages: 3
+      kernels: [3,3,3]
+      strides: [1,2,2]
+    seperate_cnn_image: True
+    concat_image: False
+    cnn_image:
+      depths: [17, 32, 64, 128]
+      kernels: [3, 3, 3]
+      stages: 3
+      strides: [1, 2, 2]
+      minres: 3
+      blocks: 0
+      resize: stride
+      normalize: False
+
+no_image_input:
+  encode_image: False
+  small_image_data: False
+  env:
+    messenger:
+      remove_image: True
+  has_image_input: False
+  rssm:
+    concat_image: False
+    atten:
+      value_dim: 64
+    seperate_cnn_image: False
+
+no_image_input_loss:
+  encode_image: False
+  small_image_data: False
+  env:
+    messenger:
+      remove_image: True
+  has_image_input: False
+  rssm:
+    concat_image: False
+    atten:
+      value_dim: 64
+    seperate_cnn_image: False
+  loss_scales:
+    image: 0
+  decoder_sent:
+    cnn_keys: ""
+  table_keys: ["atten"]
+  multi_step: True
+
+no_image_loss: # still use image for input
+  loss_scales:
+    image: 0
+  decoder_sent:
+    cnn_keys: ""
+  table_keys: ["image_gt", "image_gt_multihot", "atten"]
+  multi_step: True
+
+smaller:
+  smaller_en_de: True
+  rssm:
+    cnn: { kernel: 2, stride: 2, minres: 5, stages: 1 }
+  decoder_sent:
+    kernels: [2]
+    stages: 1
+    minres: 5
+    depths: [64, 32, 17]
+
+two_cnn_smaller:
+  two_cnn: True
+  rssm:
+    atten: { value_dim: 128 }
+    cnn:
+      preconv: False
+      depths: [128, 64]
+      kernel: 2
+      minres: 5
+      stages: 1
+      kernels: [2]
+    seperate_cnn_image: True
+    concat_image: False
+    image_depths: [17, 64]
+    image_kernels: [2]
+
+  decoder_sent:
+    kernels: [2]
+    stages: 1
+    minres: 5
+    depths: [64, 32, 17]
+
+# entity_aug:
+#   entity_aug: True
+#   rssm:
+#     entity_aug: True
+
+upsample_pos:
+  replay:
+    imbalance: "upsample_pos"
+    seperate_reward_stream: True
+    imbalance_reward: "last"
+
+prioritize:
+  replay:
+    type: prioritize
+    prioritize_hyper:
+      eps: 0.001
+      alpha: 2
+      beta: 0.5
+      c: 1e5 #
+      branching: 16
+      initial: 300
+      exponent: 1
+      # zero_out_after_sample: False # update sampled chunk with priority = eps
+
+model_loss_only:
+  replay:
+    prioritize_hyper:
+      model_loss_only: True
+
+multi_step:
+  multi_step: True
+  # dyn_rep_multi_step: False
+
+balanced_weight:
+  replay:
+    imbalance: "balanced_weight"
+    seperate_reward_stream: True
+    bw_scale: "sqrt"
+
+remove_oversample:
+  replay:
+    remove_oversample: True
+    prioritize_hyper: { zero_out_after_sample: False }
+
+# balanced_weight_ac:
+#   replay:
+#     balanced_weight_ac: True
+
+bigger_cnn_lang:
+  rssm:
+    cnn:
+      depths: [128, 200] # first is input
+      stages: 1
+
+entity_track_z:
+  entity_track: "z"
+  rssm: { add_h_to_query: False, entity_track_z: True }
+  encoder_sent:
+    entity_track: True
+  env:
+    messenger:
+      entity_track: True
+
+entity_track_atten:
+  entity_track: "atten"
+  rssm: { add_h_to_query: False, entity_track_atten: True }
+  env:
+    messenger:
+      entity_track: True
+  encoder_sent:
+    entity_track: True
+  # atten:
+  #   mlp_query_key: True
+
+entity_track_h:
+  entity_track: "h"
+  rssm: { add_h_to_query: True }
+
+sum_reward:
+  replay:
+    imbalance_reward: "sum"
+
+s3_bigger_reward:
+  reward_head: { bound: 2, bins: 200 }
+  critic: { bound: 2, bins: 200 }
+
+high_entropy:
+  actor_entropy: 6e-3
+
+norm_adv:
+  norm_adv: True
+  advnorm: { impl: off, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0 } # take from DreamerSmooth
+
+finetune_policy:
+  finetune_script: "run_finetune" # runfinetune, find_trial_number, measure_return
+  skip_from_wm: False
+  skip_win: False
+  num_eval_eps: 10
+  jax: { prealloc: False }
+  multi_step: False
+  load_match_shape: True
+  batch_length: 1
+  batch_size: 1
+  envs:
+    amount: 10
+    parallel: none
+  run:
+    script: "finetune_policy"
+    eps_finetune: 1000
+    step_finetune: 5000
+  # set mode in messenger = test
+  env:
+    messenger: { mode: "test" }
+    lwm: { mode: "test" }
+  replay: { size: 1000 }
+  actor_opt: { lr: 1e-5 }
+  critic_opt: { lr: 1e-4 }
+  model_opt: { frozen_keys: ".*" }
+  actor: { unimix: 0.1 }
+  imag_cont_hard: True
+  # finetune_log_every: 50
+  log_every: 60
+  real_step_log: False
+
+finetune_policy_seen_traj:
+  finetune_script: "run_finetune" # runfinetune, find_trial_number, measure_return
+  env:
+    messenger: { mode: "test-se" } # or test
+    lwm: { mode: "test" }
+  imag_cont_hard: True
+  actor_opt: { lr: 5e-6, clip: 100 }
+  critic_opt: { lr: 5e-4 }
+  model_opt: { frozen_keys: ".*" }
+
+measure_return:
+  finetune_script: "measure_return" # runfinetune, find_trial_number, measure_return
+  num_eval_eps: 10
+  jax: { prealloc: False }
+  multi_step: False
+  load_match_shape: True
+  batch_length: 1
+  batch_size: 1
+  envs:
+    amount: 10
+    parallel: none
+  run:
+    script: "finetune_policy"
+    eps_finetune: 1000
+    step_finetune: 5000
+  # set mode in messenger = test
+  env:
+    messenger: { mode: "test-se" }
+    lwm: { mode: "test" }
+  replay: { size: 1000 }
+  imag_cont_hard: True
+  # finetune_log_every: 50
+  log_every: 60
+  real_step_log: False
+  measure_policy: greedy #
+  load_multiple_ckpts: True
+  # report_return_lambda:
+  actor: { unimix: 0 }
+
+finetune_decay:
+  actor:
+    unimix_decay: { init: 1, steps: 5000, final: 0 }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+
+frozen_wm:
+  model_opt:
+    frozen_keys: ".*"
+
+multi_head_atten:
+  rssm:
+    atten:
+      heads: 2
+      query_dim: 32
+      key_dim: 32
+      value_dim: 32
+      mlp_query_key: False
+    cnn_atten:
+      # preconv: True
+      depths: [64, 64, 128, 256] # first is input
+
+# mlp_atten:
+#   rssm:
+#     atten:
+# mlp_query_key: True
+
+sg_ac:
+  sg_ac: True
+
+batch_norm:
+  batch_norm_rep: True
+
+entity_track_and:
+  entity_track: "atten"
+  rssm: { add_h_to_query: False, entity_track_atten: True }
+  env:
+    messenger:
+      entity_track: True
+  encoder_sent:
+    entity_track: True
+  entity_track_and: True
+  table_keys: ["atten", "atten1", "atten2"]
+
+ignore_error:
+  ignore_error: True
+
+action_pred:
+  action_pred: True
+  action_head:
+    {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      minstd: 0.1,
+      maxstd: 1.0,
+      outscale: 1.0,
+      outnorm: False,
+      inputs: [prev_stoch, x],
+      dims: x, # output has dims = dims(x) = bs, bl, 512
+      winit: normal,
+      fan: avg,
+      symlog_inputs: False,
+      dropout: 0.0,
+      dist: onehot,
+    }
+  loss_scales:
+    action: 1.0
+
+value_pred:
+  value_pred: True
+  slow_value_target: False
+  slow_value_fraction: 0.02
+  slow_value_update: 1
+  value_slowreg: logprob
+  value_head:
+    {
+      layers: 3,
+      units: 1024,
+      act: silu,
+      norm: layer,
+      dist: symexp_twohot,
+      outscale: 0.0,
+      outnorm: False,
+      inputs: [deter, stoch],
+      winit: normal,
+      fan: avg,
+      bins: 20,
+      bound: 1,
+      symlog_inputs: False,
+    }
+  loss_scales:
+    value: 1
+
+drop_x_randomly_in_query:
+  drop_x_randomly_in_query: True
+
+no_decoder: # no reconstruct sentence vec and image
+  decoder_type: none
+  loss_scales:
+    vector: 0
+    image: 0
+  decoder_sent:
+    mlp_keys: ""
+
+pos_only:
+  entity_track: "atten"
+  rssm: { add_h_to_query: False, entity_track_atten: True }
+  env:
+    messenger:
+      entity_track: True
+  encoder_sent:
+    entity_track: True
+  pos_only: True
+
+# fewer_env_step:
+#   env:
+#     messenger:
+#       length: 32
+#   imag_horizon: 32
+
+real_xy:
+  position_track: "real_xy"
+
+dot_product:
+  position_track: "dot_product"
+
+bw_priority:
+  replay:
+    balanced_weight_priority: True
+
+debug_pos_gt:
+  env:
+    messenger:
+      debug_pos_gt: True
+
+use_movement_class: # use pos embed for gt movement class
+  pos_only: True
+  use_movement_class: True
+  entity_track: "atten"
+  rssm: { add_h_to_query: False, entity_track_atten: True }
+  env:
+    messenger:
+      entity_track: True
+      use_movement_class: True
+  encoder_sent:
+    entity_track: True
+    use_movement_class: True
+
+movement_role_lang_grid:
+  movement_role_lang_grid: True
+  use_role: True
+  env:
+    lwm:
+      use_role: True
+      entity_track: True
+      use_movement_class: True
+    messenger:
+      entity_track: True
+      use_movement_class: True
+      use_role: True
+
+  # use movement class
+  pos_only: True
+  use_movement_class: True
+  entity_track: "atten"
+  rssm:
+    add_h_to_query: False
+    entity_track_atten: True
+    cnn_atten:
+      depths: [32, 32, 64, 128] # first is input
+
+  encoder_sent:
+    entity_track: True
+    use_movement_class: True
+
+
+zero_pos:
+  zero_pos: True
+
+sharpen_atten:
+  rssm:
+    atten:
+      temperature: 0.5
+
+stoch_only:
+  use_prev_stoch: True
+  reward_head:
+    inputs: [stoch, prev_stoch]
+    # dims: deter
+
+  cont_head:
+    inputs: [stoch, prev_stoch]
+    # dims: deter
+
+small_cnn:
+  rssm:
+    cnn_atten:
+      depths: [32, 64, 128] # first is input
+      stages: 1
+      strides: [2, 2]
+      kernels: [2, 2]
+      minres: 2
+  # dim_x: 2304 # 6*6*64=2304
+
+big_rep:
+  loss_scales:
+    rep: 0.5
+
+small_rew_smooth:
+  rew_smooth_mode: "gaussian"
+  zero_first: True
+  rew_smooth_amt: 0.5
+
+best1:
+  dim_x: 2336
+  input_z_sc: True
+  actor: { layers: 3, units: 768 }
+  env:
+    messenger:
+      model_sent: mpnet
+      length: 32
+  imag_horizon: 32
+  rssm:
+    atten: { value_dim: 32 }
+    cnn:
+      depths: [32, 64, 128]
+  # fewer_env_step here
+
+decay_multi_step:
+  decay_multi_step: True
+  decay_lambda: 0.9
+
+reward_onehot:
+  reward_head:
+    dist: onehot
+
+dyn_rep_multi_step:
+  dyn_rep_multi_step: True
+  loss_scales:
+    rollout_dyn: 1
+    rollout_rep: 1
+
+# small_multi_step:
+#   dyn_rep_multi_step: True
+#   loss_scales:
+#     rollout_dyn: 0.5
+#     rollout_rep: 0.05
+
+train_policy_is_first:
+  train_policy_is_first: True
+
+uncertainty:
+  uncertainty_scale: 2
+  min_reward: -1
+
+finetune_wm:
+  # run: { script: finetune_wm, num_eps_each_policy: 10000 }
+  run:
+    script: finetune_wm
+    num_eps_each_policy: 2000
+    train_ratio: 32
+    finetune_train_ratio_after_load: 256
+    report:
+      train: False
+  duplicate_pos_eps: False
+  actor: { unimix: 0.1 }
+  replay: { type: uniform }
+  decay_lambda: 0.9
+
+no_free:
+  rssm_loss:
+    { dyn_free: 0, rep_free: 0, rollout_dyn_free: 0, rollout_rep_free: 0 }
+
+deter_game:
+  env: { messenger: { deter_game: True } }
+  # z_argmax_train: True
+  # z_argmax_imagine: True
+
+deter_z:
+  z_argmax_train: True
+  z_argmax_imagine: True
+
+slow_atten:
+  slow_atten: True
+  model_opt:
+    clip_grad_atten: 0.1
+    lr_atten: 5e-6
+
+slow_encoder:
+  slow_encoder: True
+  model_opt:
+    clip_grad_encoder: 2
+    lr_encoder: 1e-5
+
+concepts:
+  predefined_concepts: True
+  num_concepts: 3
+  concept_dim: 32
+  rssm:
+    { atten_concepts: { query_dim: 32, key_dim: 32, value_dim: 32, heads: 1 } }
+
+increase_scale_rep:
+  # step is grad step
+  increase_rep: { enable: True, init: 0.05, final: 0.5, steps: 200000 }
+  # disable free bit --- max(loss, 1)
+  rssm_loss: { free: 0 }
+
+residual_z:
+  residual_z: True
+  rssm:
+    residual:
+      num_blocks: 3
+
+kl_anneal:
+  # two option here
+  # anneal the whole kl term
+  # anneal the rep loss
+  kl_anneal: True
+  rssm_loss:
+    { dyn_free: 0, rep_free: 0, rollout_dyn_free: 0, rollout_rep_free: 0 }
+  kl_anneal_params:
+    { init: 0.01, final: 1, steps: 300000, decay: linear }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+  loss_scales:
+    # not *
+    dyn: 00
+    rep: 0.0
+
+linear_anneal:
+  rep_anneal_params: { decay: linear}
+
+cube_anneal:
+  rep_anneal_params: { decay: cubic}
+
+small_freebit:
+  rssm_loss:
+    { dyn_free: 0.5, rep_free: 0.5, rollout_dyn_free: 0.5, rollout_rep_free: 0.5 }
+
+xsmall_freebit:
+  rssm_loss:
+    { dyn_free: 0.1, rep_free: 0.1, rollout_dyn_free: 0.1, rollout_rep_free: 0.1 }
+
+rep_anneal_freebit:
+  rep_anneal: True
+  rssm_loss:
+    { dyn_free: 0.1, rep_free: 0.1, rollout_dyn_free: 0.1, rollout_rep_free: 0.1 }
+  rep_anneal_params:
+    { init: 0.1, final: 1.0, steps: 100000,  step_init: 5000, decay: linear, freebit: True }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+  loss_scales:
+    rep: 1.0
+
+rep_anneal_scratch:
+  rep_anneal: True
+  rssm_loss:
+    { dyn_free: 0.1, rep_free: 0.1, rollout_dyn_free: 0.1, rollout_rep_free: 0.1 }
+  rep_anneal_params: { init: 0, final: 1, steps: 400000, step_init: 0, decay: linear, freebit: False }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+  loss_scales:
+    rep: 1.0
+
+test_rep_anneal:
+  rep_anneal_params: { init: 0, final: 1, steps: 3000, step_init: 500, decay: linear, freebit: False }
+  rep_anneal: True
+  rssm_loss:
+    { dyn_free: 0.1, rep_free: 0.1, rollout_dyn_free: 0.1, rollout_rep_free: 0.1 }
+  run:
+    opt_step: True
+  jax:
+    opt_step: True
+
+gt_grounding:
+  # turn off all atten entity_track
+  rssm:
+    atten: { gt_grounding: True }
+    add_h_to_query: False
+    entity_track_atten: False
+  posMLP: False
+  entity_track: "none"
+  env:
+    messenger:
+      entity_track: False
+  encoder_sent:
+    entity_track: False
+  atten:
+    mlp_query_key: False
+
+  # turn off atten slow
+  slow_atten: False
+  model_opt:
+    clip_grad_atten: 0
+    lr_atten: 0
+
+
+residual_decoder:
+  residual_decoder: True
+#   decoder_type: sent
+
+rsm:
+  rssm:
+    norm: rsm
+    residual:
+      norm: rsm
+
+  # all heads
+  action_head:
+    { norm: rsm }
+  cont_head:
+    { norm: rsm }
+  reward_head:
+    { norm: rsm }
+  value_head:
+    { norm: rsm }
+
+  # actor critic
+  actor:
+    { norm: rsm }
+  critic:
+    { norm: rsm }
+
+
+gru_multi_layers:
+  rssm:
+    gru_multi_layers: True
+    num_gru_layers: 2
+
+
+adam_equal: # beta1 == beta2 = 0.9
+  model_opt:
+    { opt: adam, beta1: 0.9, beta2: 0.9 }
+
+wd:
+  model_opt:
+    { wd: 0.0001 }
+
+dyn_rep_up_weight:
+  dyn_rep_up_weight: 1.5
+
+dyn_rep_up_nonzero:
+  dyn_rep_up_nonzero: 2.0
+
+pos_head_seperate:
+  rssm:
+    atten: { pos_head_seperate: True }
+
+lang_image_recon:
+
+  decoder_sent:
+    image_dist: mse
+    cnn_keys: "lang_image"
+    kernels: [3, 3]
+    strides: [2, 2]
+    stages: 2
+    minres: 3
+    depths: [256, 128, 64]
+
+  encode_image: False
+  small_image_data: False
+  env:
+    messenger:
+      remove_image: True
+    lwm:
+      remove_image: True
+  has_image_input: False
+  rssm:
+    lang_image_recon: True
+    concat_image: False
+    atten:
+      value_dim: 64
+    seperate_cnn_image: False
+
+
+no_disappear:
+  env:
+    lwm:
+      disappear: False
+      fix_reward_2: True
+
+create_offline_wm_data:
+  oracle_data_split: "all"  # ['all', 'train', 'test']
+  run:
+    script: create_offline_wm_data
+  duplicate_pos_eps: False
+  replay:
+    type: uniform
+    size: 1e5
+
+train_offline_wm:
+  train_offline_on: "train"
+
+  run:
+    script: train_offline_wm
+    train_iter: 10000000
+    torch_dataloader: True
+
+  replay:
+    type: uniform
+    size: 1e5
+    resume: True
+
+  use_unimix_decay: False
+
+  jax:
+    debug: True
+    prealloc: False
+
+  model_opt:
+    clip: 10
+    lr: 1e-4
+    # clip_grad_atten: 5
+    # lr_atten: 1e-5
+
+  # rep_anneal_params:
+  #   { init: 0.1, final: 1, steps: 200000,  step_init: 20000, decay: linear, freebit: True }
+
+eval_offline_wm:
+# oracle_data_split
+  oracle_data_mode: 'hard'  # easy, medium, hard
+  run:
+    script: eval_offline_wm
+    torch_dataloader: True
+
+  replay:
+    type: uniform
+    size: 1e5
+    resume: False
+
+  use_unimix_decay: False
+
+  # time
+  use_time_step: True
+  env:
+    messenger:
+      use_time_step: True
+    lwm:
+      use_time_step: True
+
+  encoder_sent:
+    use_time_step: True
+  dim_time: 32
+
+
+one_step_image:
+  rssm:
+    concat_image: True
+
+  one_step_image: True
+  decoder_sent:
+    inputs: [deter]
+  loss_scales:
+    next_image: 1.0
+
+  model_opt:
+    clip: 20
+    lr: 1e-4
+    # clip_grad_atten: 0.1
+    # lr_atten: 1e-5
+
+
+no_history_rollout:
+  rssm:
+    no_history_rollout: True
+
+loss_up_is_first: # rollout
+  loss_up_is_first_weight: 2.0
+
+rollout_image:
+  rollout_image: True
+  loss_scales:
+    rollout_image: 1.0
+
+overfit_batch:  # offlien
+  overfit_batch: True
+  overfit_batch_steps: 30000
+
+cpu_fallback:
+  jax:
+    platform: cpu
+    debug: True
+    jit: False
+
+  # Reduce model size for CPU training
+  rssm:
+    deter: 256
+    units: 256
+    stoch: 8
+    classes: 8
+
+  .*\.units: 256
+  .*\.layers: 2
+
+  batch_size: 2
+  batch_length: 10
+
+fast_debug:
+  # Fast debugging mode - disables JIT compilation for quick iteration
+  jax:
+    jit: False
+    debug: True
+    platform: gpu  # Keep GPU for memory but disable JIT
+    debug_nans: True
+
+  # Much smaller models for faster init
+  rssm:
+    deter: 128
+    units: 128
+    stoch: 4
+    classes: 4
+
+  encoder.cnn_depth: 8
+  decoder.cnn_depth: 8
+  .*\.units: 128
+  .*\.layers: 1
+
+  # Small batches
+  batch_size: 2
+  batch_length: 8
+
+  # Less frequent logging
+  run:
+    log_every: 30
+    save_every: 300
+
+dyn_rep_anneal:
+  dyn_rep_anneal: True
+
+no_dropout:
+  reward_head: { dropout: 0.0 }
+  cont_head: { dropout: 0.0 }
+
+reward_stoch:
+  reward_head:
+    inputs: [stoch]
+
+time_in_deter:
+  time_in: 'deter'
+
+time_in_z:
+  time_in: 'z'
+
+just_rollout_loss:
+  loss_scales:
+    dyn: 0.0
+    rep: 0.0
+    reward: 0.0
+    cont: 0.0
+    rollout_dyn: 0.0
+    rollout_rep: 0.0
+    rollout_reward: 1.0
+    rollout_cont: 1.0
+
+just_rollout_loss_tf:
+  loss_scales:
+    dyn: 0.0
+    rep: 0.0
+    reward: 1.0
+    cont: 1.0
+    rollout_dyn: 0.0
+    rollout_rep: 0.0
+    rollout_reward: 1.0
+    rollout_cont: 1.0
+
+just_rollout_tf_dr:
+  loss_scales:
+    dyn: 0.0
+    rep: 0.0
+    reward: 1.0
+    cont: 1.0
+    rollout_dyn: 1.0
+    rollout_rep: 0.1
+    rollout_reward: 1.0
+    rollout_cont: 1.0
+
+just_rollout_tf_dyn_rep:
+  loss_scales:
+    dyn: 1.0
+    rep: 1.0
+    reward: 1.0
+    cont: 1.0
+    rollout_dyn: 0.0
+    rollout_rep: 0.0
+    rollout_reward: 1.0
+    rollout_cont: 1.0
+
+dyn_rep_1:
+  loss_scales:
+    dyn: 1.0
+    rep: 1.0
+    rollout_dyn: 1.0
+    rollout_rep: 1.0
+  rssm_loss:
+    { dyn_free: 1, rep_free: 1, rollout_dyn_free: 1, rollout_rep_free: 1 }
+
+action_head_z:
+  action_head:
+    inputs: [prev_stoch, stoch]
+    dims: deter # len(deter.shape)
+
+reward_cont_z:
+  reward_head:
+    inputs: [stoch]
+    dropout: 0.0
+  cont_head:
+    inputs: [stoch]
+    dropout: 0.0
+
+dyn_rep_half:
+  loss_scales:
+    dyn: 0.2
+    rep: 0.2
+
+ema_encoder:
+  ema_encoder: True
+  slow_encoder_fraction: 0.02 # mix with 2% of new encoder
+  slow_encoder_update: 1
+
+
+use_role:
+  use_role: True
+  env:
+    lwm:
+      use_role: True
+    messenger:
+      use_role: True
+
+
+deter_limit:
+  deter_limit: True
+  # generate deter_limit: GRU(deter_t-1=0, stoch_t-1, action_t-1)
+  # dyn and rep loss from this deter_limit
+  # dyn = KL(prior(deter_limit), sg(posterior(obs)))
+  # rep = KL(sg(prior(deter_limit), posterior(obs)))
+
+
+seperate_object_z:
+  seperate_object_z: True
+
+  action_pred: False
+  # smaller cnn
+  rssm:
+    stoch: 20
+    # cnn_atten:
+    #   depths: [32, 48, 128] # first is input
+    #   stages: 1
+    #   kernels: [2]
+    #   strides: [2]

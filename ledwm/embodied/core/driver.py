@@ -1,0 +1,113 @@
+import collections
+import jax
+import numpy as np
+from .basics import convert
+
+
+class Driver:
+    _CONVERSION = {
+        np.floating: np.float32,
+        np.signedinteger: np.int32,
+        np.uint8: np.uint8,
+        bool: bool,
+    }
+
+    def __init__(self, env, first_step=None, **kwargs):
+        assert len(env) > 0
+        self._env = env
+        self._kwargs = kwargs
+        self._on_steps = []
+        self._on_episodes = []
+        self._first_step = first_step
+        self.policy_exclude_keys = kwargs.pop("exclude_keys", [])
+        self.reset()
+
+    def reset(self):
+        self._acts = {
+            k: convert(np.zeros((len(self._env),) + v.shape, v.dtype))
+            for k, v in self._env.act_space.items()
+        }
+        self._acts["reset"] = np.ones(len(self._env), bool)
+        self._eps = [collections.defaultdict(list) for _ in range(len(self._env))]
+        self._state = None
+
+    def on_step(self, callback):
+        self._on_steps.append(callback)
+
+    def on_episode(self, callback):
+        self._on_episodes.append(callback)
+
+    def __call__(self, policy, max_steps=0, max_episodes=0, opt_step=None, config=None):
+        step, episode = 0, 0
+        # cprint(f"{mode=}, {steps=}, {episodes=}", "green")
+        while step < max_steps or episode < max_episodes:
+            step, episode = self._step(
+                policy, step, episode, opt_step, max_episodes, config
+            )
+
+    def _step(
+        self,
+        policy,
+        step: int,
+        episode: int,
+        opt_step=None,
+        max_episodes=None,
+        config=None,
+    ):
+        # policy: Agent.policy
+        assert all(len(x) == len(self._env) for x in self._acts.values())
+        acts = {k: v for k, v in self._acts.items() if not k.startswith("log_")}
+
+        obs = self._env.step(acts)
+        # old_acts = acts.copy()
+
+        obs = {k: convert(v) for k, v in obs.items()}
+        assert all(len(x) == len(self._env) for x in obs.values()), obs
+        policy_obs = {k: v for k, v in obs.items() if k not in self.policy_exclude_keys}
+
+        acts, self._state, info = policy(
+            policy_obs, self._state, opt_step, **self._kwargs
+        )
+        # if old_acts['reset'] is full of True
+        # if old_acts["reset"].all():
+        #     print(info["probs"])
+
+        acts = {k: convert(v) for k, v in acts.items()}
+        if obs["is_last"].any():
+            mask = 1 - obs["is_last"]
+            acts = {k: v * self._expand(mask, len(v.shape)) for k, v in acts.items()}
+
+        acts["reset"] = obs["is_last"].copy()
+        self._acts = acts
+        trns = {**obs, **acts}
+
+        if obs["is_first"].any():
+            for i, first in enumerate(obs["is_first"]):
+                if first:
+                    self._eps[i].clear()
+
+        for i in range(len(self._env)):
+            trn = {k: v[i] for k, v in trns.items()}
+            [self._eps[i][k].append(v) for k, v in trn.items()]
+            [fn(trn, i, **self._kwargs) for fn in self._on_steps]  # replay.add
+            step += 1
+
+        if obs["is_last"].any():
+            for i, done in enumerate(obs["is_last"]):
+                if done:
+                    ep = {k: convert(v) for k, v in self._eps[i].items()}
+                    [fn(ep.copy(), i, **self._kwargs) for fn in self._on_episodes]
+                    episode += 1
+                    if max_episodes is not None and episode >= max_episodes:
+                        return step, episode
+
+        return step, episode
+
+    def _expand(self, value, dims):
+        while len(value.shape) < dims:
+            value = value[..., None]
+        return value
+
+    def set_envs(self, envs):
+        self._envs = envs
+        return self

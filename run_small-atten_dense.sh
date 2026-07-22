@@ -1,0 +1,2 @@
+sh scripts/run_messenger_s1.sh 0,1,2,3 --jax.train_devices 0,1,2,3  --jax.policy_devices 0  --envs.amount 40 --batch_size 220 --run.server dgx --configs sent large_encoder large_decoder sent_cache reward_grain small_atten dense_image --run.resume 1000@02-19#00-49-39 --run.train_ratio 128
+sh scripts/run_messenger_s1.sh 0,1,2,3 --jax.train_devices 0,1,2,3  --jax.policy_devices 0  --envs.amount 40 --batch_size 200 --run.server dgx --configs sent large_encoder large_decoder sent_cache reward_grain small_atten dense_image --run.resume 1000@02-19#00-49-39 --run.train_ratio 128
